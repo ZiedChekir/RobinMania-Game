@@ -28,7 +28,7 @@ public class WebLogin : MonoBehaviour
     {
         account = ConnectAccount();
         while (account == "") {
-            await new WaitForSeconds(1f);
+            await new WaitForSeconds(.3f);
             account = ConnectAccount();
         };
         // save account for next scene

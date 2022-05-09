@@ -179,16 +179,19 @@ window.web3gl.sendContract(method, abi, contract, args, value, gasLimit, gasPric
 */
 async function sendContract(method, abi, contract, args, value, gasLimit, gasPrice) {
   try{
-
+console.log(method);
 
   const myAddress = await signer.getAddress()
   const myContract = new ethers.Contract(contract, abi, signer);
-
    const ContractWithSigner = myContract.connect(signer);
-   var result = await ContractWithSigner[method](...JSON.parse(args));
+   var newArray =  JSON.parse(args);
+   newArray.push({value:value});
+   var result = await ContractWithSigner[method](...newArray);
+
    let resultTx = await result.wait()
+   console.log("result sendcontract frontend")
+   console.log(resultTx)
   window.web3gl.sendContractResponse = resultTx["blockHash"];
-  console.log(resultTx)
 }catch(e){
     window.web3gl.sendContractResponse = e.toString();
     console.log(e);
@@ -212,16 +215,22 @@ async function sendContract(method, abi, contract, args, value, gasLimit, gasPri
 
 async function Call(method, abi, contract, args){
 try{
+   console.log(method)
   const myAddress = await signer.getAddress()
    const myContract = new ethers.Contract(contract, abi, signer);
+
    var x = await myContract[method](...JSON.parse(args));
-   console.log(x);
+   console.log("call result frontend")
+   console.log(x.toString());
+
    window.web3gl.sendContractResponse = x.toString();
+
  }catch(e){
+    console.log(e)
+
      window.web3gl.sendContractResponse = e.toString();
 
-  console.log(e)
- }
+   }
    
 
  
@@ -236,14 +245,16 @@ try{
     async function customSignAndSend( method,abi,contract,args,value,gasLimit,gasPrice,privateKey){
       
 
+        console.log(method);
 
            const myAddress = await signer.getAddress()
-            const myContract = new ethers.Contract(contract, abi, signer);
+            const myContract = new ethers.Contract(contract,abi , signer);
             let iface = new ethers.utils.Interface(abi);
             let wallet = new ethers.Wallet(privateKey)
+
         let argsArray = [];
         //argument check for methods who doesnt need argument
-
+        
         if(JSON.parse(args) instanceof Array){
           argsArray = JSON.parse(args) ;
         }
@@ -253,7 +264,6 @@ try{
         })
         }
 
-       
        
 
         const tx = {
@@ -286,6 +296,7 @@ try{
      
       
         var x = await r.wait();
+        console.log("minting result frontend")
         console.log(x);
         window.web3gl.customSignAndSendResponse = x["blockHash"];
 
