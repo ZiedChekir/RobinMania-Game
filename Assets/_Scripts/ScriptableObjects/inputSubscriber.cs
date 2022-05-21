@@ -17,8 +17,5 @@ public class inputSubscriber : MonoBehaviour
     {
         
     }
-    void test()
-    {
-        print("hii");
-    }
+    
 }

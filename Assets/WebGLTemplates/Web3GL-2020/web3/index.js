@@ -24,7 +24,11 @@ window.web3gl = {
   sendContractResponse: "",
   customSignAndSend,
   customSignAndSendResponse:"",
-  Call
+  Call, 
+  GetOrders,
+  ordersResponse:"",
+  
+
 };
 
 // will be defined after connect()
@@ -180,18 +184,20 @@ window.web3gl.sendContract(method, abi, contract, args, value, gasLimit, gasPric
 async function sendContract(method, abi, contract, args, value, gasLimit, gasPrice) {
   try{
 console.log(method);
-
+console.log("1")
   const myAddress = await signer.getAddress()
   const myContract = new ethers.Contract(contract, abi, signer);
    const ContractWithSigner = myContract.connect(signer);
    var newArray =  JSON.parse(args);
    newArray.push({value:value});
-   var result = await ContractWithSigner[method](...newArray);
+   console.log("3")
 
-   let resultTx = await result.wait()
+   var result = await ContractWithSigner[method](...newArray);
+console.log("2")
+
    console.log("result sendcontract frontend")
-   console.log(resultTx)
-  window.web3gl.sendContractResponse = resultTx["blockHash"];
+   console.log(result)
+  window.web3gl.sendContractResponse = result["hash"];
 }catch(e){
     window.web3gl.sendContractResponse = e.toString();
     console.log(e);
@@ -222,7 +228,7 @@ try{
    var x = await myContract[method](...JSON.parse(args));
    console.log("call result frontend")
    console.log(x.toString());
-
+   console.log(x.toString())
    window.web3gl.sendContractResponse = x.toString();
 
  }catch(e){
@@ -231,12 +237,50 @@ try{
      window.web3gl.sendContractResponse = e.toString();
 
    }
-   
+}
+   async function GetOrders(abi,contract,tokenID){
+ try{
+      console.log("working 1")
+     const myAddress = await signer.getAddress()
+           console.log("working contract")
+
+    const myContract = new ethers.Contract(contract, abi, signer);
+    let  rawresult = []
+          console.log("working 2")
+
+    for(let i=0;i< 6 ; i++){
+         var x = await myContract.getOrdersOf(i.toString());
+               console.log("working loop"+i)
+
+         rawresult = [...rawresult, ...x]
+
+    }
+    let result = [];
+          console.log("working 3")
+
+    rawresult.map((order)=>{
+      result.push([order.seller.toString(),order.price.toString(),order.tokenID.toString(),order.index.toString()])
+    })
+          console.log("working 2")
+
+    if(result.length == 0) 
+       result = [['']]
+
+     console.log("orders from frontend")
+     console.log( JSON.stringify(result))
+   window.web3gl.ordersResponse = JSON.stringify(result);
+
+ }catch(e){
+    console.log(e)
+
+     window.web3gl.ordersResponse = e.toString();
+
+   }
 
  
      
-
 }
+
 
 
 
@@ -274,7 +318,7 @@ try{
         to: contract, 
         // optional if you want to specify the gas limit 
         gasPrice: (await provider.getGasPrice()).toHexString(),
-        gasLimit: "0x"+"23Bb39a3",
+        
         
         // optional if you are invoking say a payable function 
         //need s to change value to hex 

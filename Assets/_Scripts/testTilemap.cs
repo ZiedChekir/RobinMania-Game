@@ -17,6 +17,6 @@ public class testTilemap : MonoBehaviour
     }
     void x (string a)
     {
-        print(a);
+       // print(a);
     }
 }

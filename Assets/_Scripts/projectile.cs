@@ -103,7 +103,6 @@ public class projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
 
-        print(other.gameObject.name);
 
         onDestroy();
     }
@@ -112,7 +111,6 @@ public class projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        print(collision.name);
         onDestroy();
     }
     void onDestroy()
