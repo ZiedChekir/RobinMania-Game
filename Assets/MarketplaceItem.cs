@@ -61,32 +61,32 @@ public class MarketplaceItem : MonoBehaviour
     private static extern void CallContract(string method, string abi, string contract, string args);
 
 
-  
-    public void populateItem( string price, string tokenID, string index)
+
+    public void populateItem(string price, string tokenID, string index)
     {
         // this.title.text = title;
         sprite.sprite = ItemDatabase.ItemList[Int32.Parse(tokenID)].sprite;
         double priceDouble = double.Parse(price) / 1000000000000000000;
 
         this.price.text = priceDouble.ToString() + " KAI";
-        
+
         //convert kai to wei
-       
-        
-        buyButton.onClick.AddListener( () =>  buy(tokenID,index,price));
+
+
+        buyButton.onClick.AddListener(() => buy(tokenID, index, price));
     }
 
-    async void  buy(string tokenID, string index, string price)
+    async void buy(string tokenID, string index, string price)
     {
 
 
         //maybe check if approved before approve all
-        
+
 
 
         string method = "setApprovalForAll";
 
-        
+
 
         SetContractResponse("");
         string args1 = "[\"" + PlayerPrefs.GetString("Account") + "\",\"" + ContractData.MarketplaceAddress + "\"]";
@@ -104,9 +104,9 @@ public class MarketplaceItem : MonoBehaviour
         if (response == "false")
         {
 
-       
-             args = "[\"" + ContractData.MarketplaceAddress + "\",true]";
-            SendContractJs(method, ContractData.GameAbi, ContractData.GameAddress, args,"0" , "12", "23");
+
+            args = "[\"" + ContractData.MarketplaceAddress + "\",true]";
+            SendContractJs(method, ContractData.GameAbi, ContractData.GameAddress, args, "0", "12", "23");
 
             response = SendContractResponse();
             while (response == "")
@@ -118,10 +118,10 @@ public class MarketplaceItem : MonoBehaviour
 
         }
         method = "buyItem";
-        args = "[\"" + ContractData.GameAddress + "\",\""+tokenID+"\","+index+"]";
+        args = "[\"" + ContractData.GameAddress + "\",\"" + tokenID + "\"," + index + "]";
         SendContractJs(method, ContractData.MarketplaceAbi, ContractData.MarketplaceAddress, args, price, "12", "23");
 
-         response = SendContractResponse();
+        response = SendContractResponse();
         while (response == "")
         {
             await new WaitForSeconds(0.3f);
@@ -129,7 +129,7 @@ public class MarketplaceItem : MonoBehaviour
         }
         SetContractResponse("");
 
-        if(response.Length == 66)
+        if (response.Length == 66)
         {
             print("buy success");
             InventoryBackend.Instance.AddItem(ItemDatabase.ItemList[Int32.Parse(tokenID)]);

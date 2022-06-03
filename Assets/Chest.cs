@@ -77,23 +77,7 @@ public class Chest : MonoBehaviour
         ChestID = transform.GetSiblingIndex();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         PanelScript = ClaimNftPanel.gameObject.GetComponent<NFTPanel>();
-        
         SR = GetComponent<SpriteRenderer>();
-        
-        //bool x = await Mintable.Instance.isMintable(ItemID.ToString());
-
-
-      /*  if (PlayerPrefs.HasKey("Chest" + ChestID) )
-        {
-            opened = true;
-            SR.sprite = Opened;
-
-        }
-        else
-        {
-            opened = false;
-            SR.sprite = Closed;
-        }*/
     }
 
 
@@ -127,7 +111,6 @@ public class Chest : MonoBehaviour
         {
             ClaimNftPanel.SetActive(false);
             PanelScript.button.onClick.RemoveAllListeners();
-           // PanelScript.button2.onClick.RemoveAllListeners();
         }
     }
 
@@ -166,29 +149,6 @@ public class Chest : MonoBehaviour
         {
             print(e);
         }
-
-        //bool mintable = await metamask.Instance.isMintable(ItemID);
-        //print("mintable is ");
-        //print(mintable);
-        //if (mintable)
-        //{
-        //    InventoryBackend.Instance.AddItem(ItemDatabase.ItemList[ItemID]);
-        //    ToastManager.Instance.AddToast("Item Successfully minted");
-        //    SR.sprite = Opened;
-        //    PlayerPrefs.SetInt("Chest" + ChestID, 1);
-        //}
-
-        /* bool x = await AllowPlayerToMint.Instance.Allow(ItemID.ToString());
-         bool y = await Mint.Instance.mint(ItemID.ToString());
-         //bool w = await Mintable.Instance.isMintable(ItemID.ToString());
-
-         if (x && y)
-         {
-             InventoryBackend.Instance.AddItem(ItemDatabase.ItemList[ItemID]);
-             ToastManager.Instance.AddToast("Item Successfully minted");
-             SR.sprite = Opened;
-             PlayerPrefs.SetInt("Chest" + ChestID, 1);
-         }*/
 
     }
 
@@ -266,17 +226,6 @@ public class Chest : MonoBehaviour
                 response = SendCustomTransactionResponse();
             }
             SetCustomTransactionResponse("");
-            // check if user submmited or user rejected
-            /*if (response.Length == 66)
-            {
-                print(response);
-                return response;
-            }
-            else
-            {
-                throw new Exception(response);
-            }
-    */
             print(response);
 
             return response;

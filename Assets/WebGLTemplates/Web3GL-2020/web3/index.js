@@ -6,12 +6,7 @@ document.body.appendChild(Object.assign(document.createElement("script"), { type
 document.body.appendChild(Object.assign(document.createElement("script"), { type: "text/javascript", src: "./web3/lib/ethers-5.6.4.min.js" }));
 document.body.appendChild(Object.assign(document.createElement("script"), { type: "text/javascript", src: "./web3/lib/web3.min.js" }));
 
-// uncomment to enable torus wallet
-// document.body.appendChild(Object.assign(document.createElement("script"), { type: "text/javascript", src: "https://unpkg.com/@toruslabs/torus-embed" }));
-// uncomment to enable walletconnect
-// document.body.appendChild(Object.assign(document.createElement("script"), { type: "text/javascript", src: "https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js" }));
 
-// load web3gl to connect to unity
 window.web3gl = {
   networkId: 0,
   connect,
@@ -46,8 +41,6 @@ async function connect(){
   provider = new ethers.providers.Web3Provider(window.ethereum)
   await provider.send("eth_requestAccounts", []);
   signer = await  provider.getSigner()
-  // const myContract = new ethers.Contract(contractAddress, abi, provider);
-  // var x = await myContract.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","2");
 const network = await provider.getNetwork();
 web3gl.networkId = parseInt(network.chainId);
    // if current network id is not equal to network id, then switch
@@ -170,30 +163,17 @@ async function sendTransaction(to, value, gasLimit, gasPrice) {
     });
 }
 
-/*
-paste this in inspector to connect to interact with contract:
-const method = "increment"
-const abi = `[ { "inputs": [], "name": "increment", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "x", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" } ]`;
-const contract = "0xB6B8bB1e16A6F73f7078108538979336B9B7341C"
-const args = "[]"
-const value = "0"
-const gasLimit = "222222" // gas limit
-const gasPrice = "333333333333"
-window.web3gl.sendContract(method, abi, contract, args, value, gasLimit, gasPrice)
-*/
+
 async function sendContract(method, abi, contract, args, value, gasLimit, gasPrice) {
   try{
-console.log(method);
-console.log("1")
+
   const myAddress = await signer.getAddress()
   const myContract = new ethers.Contract(contract, abi, signer);
    const ContractWithSigner = myContract.connect(signer);
    var newArray =  JSON.parse(args);
    newArray.push({value:value});
-   console.log("3")
 
    var result = await ContractWithSigner[method](...newArray);
-console.log("2")
 
    console.log("result sendcontract frontend")
    console.log(result)
@@ -203,20 +183,7 @@ console.log("2")
     console.log(e);
 
 }
- // myContract.methods[method](...JSON.parse(args))
- //    .send({
-      
- //      from,
- //      value,
- //      gasPrice: "0x"+(await web3.eth.getGasPrice(function(e, r) { return r })).toString(16),
- //      gasLimit: "0x239B342",
- //    })
- //    .on("transactionHash", (transactionHash) => {
- //      window.web3gl.sendContractResponse = transactionHash;
- //    })
- //    .on("error", (error) => {
- //      window.web3gl.sendContractResponse = error.message;
- //    });
+
 }
 
 async function Call(method, abi, contract, args){
@@ -224,13 +191,8 @@ try{
    console.log(method)
   const myAddress = await signer.getAddress()
    const myContract = new ethers.Contract(contract, abi, signer);
-
    var x = await myContract[method](...JSON.parse(args));
-   console.log("call result frontend")
-   console.log(x.toString());
-   console.log(x.toString())
    window.web3gl.sendContractResponse = x.toString();
-
  }catch(e){
     console.log(e)
 
@@ -240,29 +202,17 @@ try{
 }
    async function GetOrders(abi,contract,tokenID){
  try{
-      console.log("working 1")
      const myAddress = await signer.getAddress()
-           console.log("working contract")
-
     const myContract = new ethers.Contract(contract, abi, signer);
     let  rawresult = []
-          console.log("working 2")
-
     for(let i=0;i< 6 ; i++){
          var x = await myContract.getOrdersOf(i.toString());
-               console.log("working loop"+i)
-
          rawresult = [...rawresult, ...x]
-
     }
     let result = [];
-          console.log("working 3")
-
     rawresult.map((order)=>{
       result.push([order.seller.toString(),order.price.toString(),order.tokenID.toString(),order.index.toString()])
     })
-          console.log("working 2")
-
     if(result.length == 0) 
        result = [['']]
 
