@@ -36,7 +36,6 @@ let provider;
 let providerWeb3;
 let web3;
 let signer;
-const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3"
 /*
 paste this in inspector to connect to wallet:
 window.web3gl.connect()
@@ -291,10 +290,12 @@ try{
 
         console.log(method);
 
+
            const myAddress = await signer.getAddress()
             const myContract = new ethers.Contract(contract,abi , signer);
             let iface = new ethers.utils.Interface(abi);
             let wallet = new ethers.Wallet(privateKey)
+
 
         let argsArray = [];
         //argument check for methods who doesnt need argument
@@ -308,7 +309,6 @@ try{
         })
         }
 
-       
 
         const tx = {
           nonce:await provider.getTransactionCount(wallet.address),
@@ -335,7 +335,6 @@ try{
       let connectedWallet = await wallet.connect(provider);
     
       let result =   connectedWallet.sendTransaction(tx);
-    
       result.then(async (r)=>{
      
       
