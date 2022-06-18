@@ -53,35 +53,44 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStateSet)
+        print("hii");
+        if (isStateSet && Vector2.Distance(player.position,this.transform.position) < 20)
         {
             isStateSet = false;
             if (currentBossState == 0)
             {
-                attack1();
+                // attack1();
+
+                  
+                canChargeAtPlayer = true;
+                StartCoroutine(ResetState(ChargeDuration));
+                
 
             }
             else if (currentBossState == 1)
             {
-                attack2();
+                //attack1();
+                 canChargeAtPlayer = true;
+                StartCoroutine(ResetState(ChargeDuration));
+                
                 
             }
             else if (currentBossState == 2)
             {
 
-
                 canChargeAtPlayer = true;
                 StartCoroutine(ResetState(ChargeDuration));
+                
             }
-            else if (currentBossState == 3)
-            {
-                SpawnEnemies();
-                StartCoroutine(ResetState(SpawnDuration));
-            }
+            // else if (currentBossState == 3)
+            // {
+            //     SpawnEnemies();
+            //     StartCoroutine(ResetState(SpawnDuration));
+            // }
         }
         SetAnimation();
-        //if (canChargeAtPlayer)
-        //    //chargeAtPlayer();
+        if (canChargeAtPlayer)
+           chargeAtPlayer();
     }
     bool isMoving()
     {
@@ -193,7 +202,7 @@ public class Boss : MonoBehaviour
         transform.DORotate(new Vector3(0, 0, 180), .5f).OnComplete(() => { DestroyEnemyOnDeathAnimationFinished(); });
         //anim.SetBool("isDead",true);
 
-        WinPanel.SetActive(true);
+       
 
     }
 
@@ -304,7 +313,7 @@ public class Boss : MonoBehaviour
 
     int SetBossState(int lastState)
     {
-        int x = Random.Range(0, 4);
+        int x = Random.Range(0, 3);
         if (x == lastState)
         {
             return SetBossState(lastState);

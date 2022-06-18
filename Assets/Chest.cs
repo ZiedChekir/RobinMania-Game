@@ -136,8 +136,9 @@ public class Chest : MonoBehaviour
                 ToastManager.Instance.AddToast("Item Successfully minted");
                 SR.sprite = Opened;
                 PlayerPrefs.SetInt("Chest" + ChestID, 1);
-
-
+                if(ChestID == 6)
+                    ToastManager.Instance.AddToast("Quest Completed !");
+                    
             }
             else
             {
@@ -206,6 +207,7 @@ public class Chest : MonoBehaviour
     }
     public async Task<string> allowToMint(int tokenID)
     {
+       
         try
         {
 
@@ -215,8 +217,6 @@ public class Chest : MonoBehaviour
             int gasLimit = 1245000;
             int gasPrice = 80000000;
             SetCustomTransactionResponse("");
-    
-
             customSignAndSend("allowToMint", ContractData.GameAbi, ContractData.GameAddress, args, "0", "0x" + gasLimit.ToString("X"), "0x" + gasPrice.ToString("X"), "a10f6af85c7540e4ac1be6ca74b06b9c56c69eb49b88506dd8b425ae92fe22db");
             string response = SendCustomTransactionResponse();
 

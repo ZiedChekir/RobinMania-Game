@@ -10,8 +10,8 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private Slider SecondSlider;
-    [SerializeField] private Color High;
-    [SerializeField] private Color Low;
+    // [SerializeField] private Color High;
+    // [SerializeField] private Color Low;
 
     public void InitHealth(float health, float maxhealth)
     {

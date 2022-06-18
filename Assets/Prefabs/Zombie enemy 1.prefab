@@ -117,7 +117,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!1 &1771867385624841555
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +530,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   moveSpeed: 3.56
+  enemyType: 0
   Health: 5
   walkPointRange: 3
   timeBetweenAttacks: 0.26
@@ -664,8 +665,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 6052650039700070865}
   SecondSlider: {fileID: 6078150327926532232}
-  High: {r: 1, g: 0.22352943, b: 0.22352943, a: 1}
-  Low: {r: 0.88159657, g: 1, b: 0, a: 1}
 --- !u!1 &6622633973855754594
 GameObject:
   m_ObjectHideFlags: 0

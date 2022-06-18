@@ -68,8 +68,8 @@ public class MarketplaceItem : MonoBehaviour
         sprite.sprite = ItemDatabase.ItemList[Int32.Parse(tokenID)].sprite;
         double priceDouble = double.Parse(price) / 1000000000000000000;
 
-        this.price.text = priceDouble.ToString() + " KAI";
-
+        this.price.text = priceDouble.ToString() + " Matic";
+       
         //convert kai to wei
 
 
