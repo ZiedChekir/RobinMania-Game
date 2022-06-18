@@ -529,7 +529,11 @@ public class EnemyBehaviour : MonoBehaviour
         EnemyManager.EnemyNumbers--;
         transform.DORotate(new Vector3(0, 0, 180), .5f).OnComplete(() => { DestroyEnemyOnDeathAnimationFinished(); });
         //anim.SetBool("isDead",true);
+        if(!QuestManager.questAccepted)
+            return;
+        QuestManager.EnemiesKilled += 1;
         
+        QuestManager.CheckCompleted();
     }
     public void DestroyEnemyOnDeathAnimationFinished()
     {

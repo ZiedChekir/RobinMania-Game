@@ -153,8 +153,9 @@ public class Chest : MonoBehaviour
                 ToastManager.Instance.AddToast("Item Successfully minted");
                 SR.sprite = Opened;
                 PlayerPrefs.SetInt("Chest" + ChestID, 1);
-
-
+                if(ChestID == 6)
+                    ToastManager.Instance.AddToast("Quest Completed !");
+                    
             }
             else
             {
