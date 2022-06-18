@@ -100,20 +100,8 @@ public class Vendor : MonoBehaviour
     }
     public async Task<string[][]> SeeOrders()
     {
-        //fetch 
-        //string method = "getOrdersOf";
-
-
-
-         
-            string[][] rawResultStringForItem = await getOrdersOf( ContractData.MarketplaceAbi, ContractData.MarketplaceAddress,69);
-
-
-
-        //  JArray resultArray = JsonConvert.DeserializeObject<JArray>(rawResultString);
         
-
-       
+            string[][] rawResultStringForItem = await getOrdersOf( ContractData.MarketplaceAbi, ContractData.MarketplaceAddress,69);       
 
         return rawResultStringForItem;
     }
@@ -155,20 +143,6 @@ public class Vendor : MonoBehaviour
     }
 
 
-    private void Start()
-    {
-
-        // FetchAndPopulateMarketplaceItems();
-
-
-    }
-
-
-    private void Update()
-    {
-   
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -176,9 +150,6 @@ public class Vendor : MonoBehaviour
         {
             FetchAndPopulateMarketplaceItems();
             VendorPanel.SetActive(true);
-            //PanelScript.button.onClick.AddListener(() => Claim());
-
-
         }
 
     }
@@ -187,8 +158,6 @@ public class Vendor : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && VendorPanel.activeSelf)
         {
             VendorPanel.SetActive(false);
-            //PanelScript.button.onClick.RemoveAllListeners();
-            // PanelScript.button2.onClick.RemoveAllListeners();
         }
     }
 
