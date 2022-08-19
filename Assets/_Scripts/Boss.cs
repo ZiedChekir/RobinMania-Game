@@ -53,7 +53,6 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("hii");
         if (isStateSet && Vector2.Distance(player.position,this.transform.position) < 20)
         {
             isStateSet = false;
